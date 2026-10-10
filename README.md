@@ -7,7 +7,9 @@ running against https://www.saucedemo.com.
 Java 21, Maven, Selenium, TestNG
 
 ## Run the tests
+```
 mvn test
+```
 
 ## Roadmap
 - [x] First login test
