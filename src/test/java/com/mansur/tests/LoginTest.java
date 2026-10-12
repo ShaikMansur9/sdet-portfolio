@@ -1,6 +1,6 @@
 package com.mansur.tests;
 
-import org.openqa.selenium.By;
+import com.mansur.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -12,23 +12,18 @@ public class LoginTest {
 
     private WebDriver driver;
 
+    private LoginPage loginPage;
+
     @BeforeMethod
     public void setUp() {
         driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com/");
+        loginPage = new LoginPage(driver);
     }
 
     @Test
-    public void validLoginTest() {
-
-        driver.findElement(By.id("user-name"))
-                .sendKeys("standard_user");
-
-        driver.findElement(By.id("password"))
-                .sendKeys("secret_sauce");
-
-        driver.findElement(By.id("login-button"))
-                .click();
+    public void validUserCanLogIn() {
+        loginPage.loginAs("standard_user", "secret_sauce");
 
         Assert.assertTrue(
                 driver.getCurrentUrl().contains("inventory"),
