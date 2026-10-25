@@ -9,16 +9,21 @@ import java.time.Duration;
 
 public class InventoryPage {
 
-    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     private final By pageTitle = By.cssSelector("[data-test='title']");
 
     public InventoryPage(WebDriver driver) {
-        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void waitUntilLoaded() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
     }
 
     public String getTitle() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)).getText();
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(pageTitle)
+        ).getText();
     }
 }

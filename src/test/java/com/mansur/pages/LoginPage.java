@@ -22,13 +22,29 @@ public class LoginPage {
 
     public InventoryPage loginAs(String username, String password) {
         attemptLogin(username, password);
-        return new InventoryPage(driver);
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.waitUntilLoaded();
+
+        return inventoryPage;
     }
 
     public void attemptLogin(String username, String password) {
-        driver.findElement(usernameField).sendKeys(username);
-        driver.findElement(passwordField).sendKeys(password);
-        driver.findElement(loginButton).click();
+
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(usernameField)
+        ).sendKeys(username);
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(passwordField)
+        ).sendKeys(password);
+
+        wait.until(
+                ExpectedConditions.elementToBeClickable(loginButton)
+        ).click();
     }
 
     public String getErrorMessage() {
